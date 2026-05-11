@@ -1,0 +1,56 @@
+{% extends "todo/base.html" %}
+
+{% block content %}
+<div class="animate-fade-in">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h2 class="fw-bold mb-0">My Tasks</h2>
+        <span class="text-muted small">{{ tasks.count }} tasks total</span>
+    </div>
+
+    {% for task in tasks %}
+    <div class="task-item {% if task.completed %}completed{% endif %}">
+        <div class="d-flex align-items-center flex-grow-1">
+            <form method="post" action="{% url 'todo:task_toggle_complete' task.pk %}" class="me-3">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-link p-0 text-decoration-none">
+                    {% if task.completed %}
+                        <i class="fas fa-check-circle text-success fs-4"></i>
+                    {% else %}
+                        <i class="far fa-circle text-muted fs-4"></i>
+                    {% endif %}
+                </button>
+            </form>
+            <div class="task-content">
+                <div class="task-title">{{ task.title }}</div>
+                {% if task.description %}
+                <div class="task-desc">{{ task.description|truncatechars:100 }}</div>
+                {% endif %}
+                <div class="text-muted smallest mt-1" style="font-size: 0.7rem;">
+                    <i class="far fa-clock me-1"></i>{{ task.created_at|date:"M d, Y" }}
+                </div>
+            </div>
+        </div>
+        
+        <div class="actions ms-3 d-flex gap-2">
+            <a href="{% url 'todo:task_update' task.pk %}" class="btn btn-sm btn-outline-light" title="Edit">
+                <i class="fas fa-edit"></i>
+            </a>
+            <a href="{% url 'todo:task_delete' task.pk %}" class="btn btn-sm btn-outline-danger" title="Delete">
+                <i class="fas fa-trash-alt"></i>
+            </a>
+        </div>
+    </div>
+    {% empty %}
+    <div class="glass-card text-center py-5">
+        <div class="mb-3">
+            <i class="fas fa-clipboard-list fs-1 text-muted"></i>
+        </div>
+        <h4 class="text-muted">No tasks yet!</h4>
+        <p class="text-muted small">Create your first task to get started.</p>
+        <a href="{% url 'todo:task_create' %}" class="btn btn-primary mt-2">
+            <i class="fas fa-plus me-2"></i>Add Task
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
