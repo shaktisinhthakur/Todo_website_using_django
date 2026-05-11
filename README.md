@@ -66,7 +66,15 @@ Task Flow is a modern, premium TODO application built with **Django 5.1**. It fe
 
 ## 📸 Screenshots
 
-*(Add your screenshots here after deployment)*
+<div align="center">
+  <img src="screenshots/home.png" alt="Home Page" width="800">
+  <p><em>Home Page - Task List View</em></p>
+  
+  <br>
+  
+  <img src="screenshots/add_task.png" alt="Add Task" width="800">
+  <p><em>Add Task Page - Glassmorphism UI</em></p>
+</div>
 
 ## 📄 License
 
